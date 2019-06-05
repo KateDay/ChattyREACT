@@ -15,7 +15,8 @@ class ChatBar extends Component {
 }
 
 ChatBar.propTypes = {
-    currentUser: PropTypes.object
+    currentUser: PropTypes.object,
+    handleKeyPress: PropTypes.func
 }
 
 export default ChatBar;

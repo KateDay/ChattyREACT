@@ -21,15 +21,12 @@ class App extends Component {
         }
       ]
     }
-    this.currentUser = this.currentUser.bind(this);
+
     this.messages = this.messages.bind(this);
     this.handleKeyPress = this. handleKeyPress.bind(this);
     this.addMsg = this.addMsg.bind(this);
   }
 
-  currentUser(name){
-    this.setState({currentUser: name})
-  }
   messages(message){
     this.setState({message})
   }
@@ -47,14 +44,17 @@ class App extends Component {
 
   handleKeyPress(event) {
     if (event.charCode==13) {
+
+      
         this.setState(
           {messages: this.addMsg(event.target.value)}
           )
+        event.target.value = ''
     }
   }
 
   componentDidMount() {
-    console.log('componentDidMount <App />');
+    // console.log('componentDidMount <App />');
     setTimeout(() => {
       console.log('Simulating incoming message');
       // Add a new message to the list of messages in the data store
