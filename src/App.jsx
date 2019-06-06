@@ -11,24 +11,30 @@ class App extends Component {
       currentUser: {name: 'Bob'}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: []
     }
-    this.handleKeyPress = this. handleKeyPress.bind(this);
+    this.messageHandler = this. messageHandler.bind(this);
+    this.usernameHandler = this. usernameHandler.bind(this);
   }
 
-  handleKeyPress(event) {
+  messageHandler(event) {
     if (event.charCode==13) {
-        const newMsg = {
-        id: this.state.messages.length+1,
-        username: this.state.currentUser.name,
-        content: event.target.value
+      const newMsg = {
+      id: this.state.messages.length+1,
+      username: this.state.currentUser.name,
+      content: event.target.value
       }
-      // const newMsges = [...this.state.messages, newMsg]
-
       this.socket.send(JSON.stringify(newMsg))
-
-      // this.setState(
-      //   {messages: newMsges}
-      //   )
-        event.target.value = '';
+      event.target.value = '';
+    }
+  }
+  usernameHandler(event){
+    if (event.charCode==13) {
+      const user = {
+        name: event.target.value
+      }
+      this.setState(
+        {currentUser: user}
+      )
+      event.target.value = '';
     }
   }
 
@@ -42,9 +48,9 @@ class App extends Component {
         console.log(msg)
         const newMsges = [...this.state.messages, msg]
         this.setState( 
-          {messages: newMsges})
+          {messages: newMsges}
+          )
       }
-      
     }
 
     // setTimeout(() => {
@@ -63,7 +69,9 @@ class App extends Component {
       <div>
         <Nav/>
         <MessageList messages={this.state.messages}/>
-        <ChatBar currentUser={this.state.currentUser} handleKeyPress={this.handleKeyPress}/>
+        <ChatBar currentUser={this.state.currentUser} 
+                usernameHandler={this.usernameHandler} 
+                messageHandler={this.messageHandler}/>
       </div>
     );
   }
