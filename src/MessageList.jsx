@@ -9,11 +9,12 @@ class MessageList extends Component {
         <Message username={msg.username} content={msg.content} key={msg.id}/>
 
         );
+
         return (
             <main className="messages">
                 {messagesList}
                 <div className="message system">
-                    Anonymous1 changed their name to nomnom.
+                    {/* {this.props.username} changed their name to {this.props.username}. */}
                 </div>
             </main>
         );
