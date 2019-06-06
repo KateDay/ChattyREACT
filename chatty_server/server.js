@@ -15,6 +15,13 @@ const server = express()
 // Create the WebSockets server
 const wss = new SocketServer({ server });
 
+wss.broadcast = function broadcast(data) {
+    wss.clients.forEach(function each(client) {
+        if (client.readyState === 1) {
+        client.send(data);
+        }
+    });
+};
 
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
@@ -24,18 +31,10 @@ wss.on('connection', (ws) => {
 
     ws.on('message', function incoming(data) {
         const parsed = JSON.parse(data)
-        // parsed.id = uuidv1();
+        parsed.id = uuidv1();
 
-        // wss.broadcast = function broadcast(data) {
-        //     wss.clients.forEach(function each(client) {
-        //         if (client.readyState === WebSocket.OPEN) {
-        //         client.send(data + uuidv1);
-        //         }
-        //     });
-        // };
-        
-        console.log(parsed)
-
+        wss.broadcast(JSON.stringify(parsed))
+    
         console.log(`${parsed.username} said ${parsed.content}`) 
     });
 
