@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, {Component} from 'react';
 import Nav from './Nav.jsx';
 import MessageList from './MessageList.jsx';
@@ -8,53 +9,35 @@ class App extends Component {
     super(props)
     this.state = {
       currentUser: {name: 'Bob'}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: [
-        {
-          id: 1,
-          username: 'Bob',
-          content: 'Has anyone seen my marbles?',
-        },
-        {
-          id: 2,
-          username: 'Anonymous',
-          content: 'No, I think you lost them. You lost your marbles Bob. You lost them for good.'
-        }
-      ]
+      messages: []
     }
-
-    this.messages = this.messages.bind(this);
     this.handleKeyPress = this. handleKeyPress.bind(this);
-    this.addMsg = this.addMsg.bind(this);
-  }
-
-  messages(message){
-    this.setState({message})
-  }
-  
-  addMsg(message){
-    const newMsg = {
-      id: this.state.id+1,
-      username: this.state.currentUser.name,
-      content: message
-    }
-
-    const newMsges = [...this.state.messages, newMsg]
-    return newMsges;
   }
 
   handleKeyPress(event) {
     if (event.charCode==13) {
+      const newMsg = {
+        id: this.state.messages.length+1,
+        username: this.state.currentUser.name,
+        content: event.target.value
+      }
+      const newMsges = [...this.state.messages, newMsg]
 
-      
-        this.setState(
-          {messages: this.addMsg(event.target.value)}
-          )
-        event.target.value = ''
-    }
+      this.socket.send(JSON.stringify(newMsg))
+      this.setState(
+        {messages: newMsges}
+        )
+        event.target.value = '';
+      }
   }
 
   componentDidMount() {
-    // console.log('componentDidMount <App />');
+    this.socket = new WebSocket('ws://localhost:3001')
+    this.socket.onopen = () => {
+      console.log('Chatty Server is now Connected')
+      
+    }
+
     setTimeout(() => {
       console.log('Simulating incoming message');
       // Add a new message to the list of messages in the data store
@@ -66,7 +49,6 @@ class App extends Component {
     }, 3000);
   }
   
-
   render() {
     return (
       <div>
