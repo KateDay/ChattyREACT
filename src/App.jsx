@@ -28,7 +28,7 @@ class App extends Component {
     }
   }
 // giving the ability to change the user
-  usernameHandler(event){
+  usernameHandler(event) {
     if (event.charCode==13) {
       const notify = `${this.state.currentUser.name} changed their name to ${event.target.value}!`
       const userMsg = {
@@ -43,20 +43,26 @@ class App extends Component {
     }
   }
 
+// this is going to happen at a certain time
   componentDidMount() {
     this.socket = new WebSocket('ws://localhost:3001')
     this.socket.onopen = () => {
       console.log('Chatty Server is now Connected')
 
       this.socket.onmessage = (event) => {
-        const msg = JSON.parse(event.data);
-        console.log(msg)
+        const post = JSON.parse(event.data);
         
-
-        const newMsges = [...this.state.messages, msg]
-        this.setState( 
-          {messages: newMsges}
-        )
+        if(post.type === 'incomingMessage') {
+          const newMsges = [...this.state.messages, post]
+          this.setState( 
+            { messages: newMsges }
+          )          
+        } else if(post.type === 'incomingNotification') {
+          const msgNotify = [... this.state.messages, post]
+          this.setState(
+            { messages: msgNotify }
+          )
+        }
       }
     }
 
@@ -70,7 +76,8 @@ class App extends Component {
     //   this.setState({messages: messages})
     // }, 3000);
   }
-  
+
+// What is going to be displayed
   render() {
     return (
       <div>
