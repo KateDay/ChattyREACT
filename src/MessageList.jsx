@@ -7,14 +7,17 @@ class MessageList extends Component {
     render() {
         var messagesList = this.props.messages.map((msg) => 
         <Message username={msg.username} content={msg.content} key={msg.id}/>
-
         );
+        let notifications = this.props.messages
+            .filter((message) => message.type === 'incomingNotifaction')
+            .map((message) => message.content);
+
 
         return (
             <main className="messages">
                 {messagesList}
                 <div className="message system">
-                    {/* {this.props.username} changed their name to {this.props.username}. */}
+                    {notifications}
                 </div>
             </main>
         );
