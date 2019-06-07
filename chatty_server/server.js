@@ -26,13 +26,17 @@ wss.broadcast = function broadcast(data) {
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
-    console.log('Client connected');
-    let numCount = {
-        type: 'counter'
-    }
     connections++;
-    console.log(connections);
-    wss.broadcast(numCount) // sending the number of connections total to the app
+    console.log('Client connected totalling: ', connections);
+    function connectionTotal() {
+        let numCount = {
+            type: 'counter',
+            count: connections
+        }
+        return numCount;
+    }   
+    console.log(connectionTotal())
+    wss.broadcast(JSON.stringify(connectionTotal())) // sending the number of connections total to the app
 
     ws.on('message', function incoming(data) {
         const parsed = JSON.parse(data)
@@ -46,16 +50,20 @@ wss.on('connection', (ws) => {
         console.log(parsed)
         wss.broadcast(JSON.stringify(parsed))
         console.log(`${parsed.username} said ${parsed.content}`) 
-
     });
 
     // Set up a callback for when a client closes the socket. This usually means they closed their browser.
     ws.on('close', () => { 
         connections--;
-        console.log('Client disconnected')
-        console.log(connections);
-        wss.broadcast(numCount) // sending connections totals
+        function connectionTotal() {
+            let numCount = {
+                type: 'counter',
+                count: connections
+            }
+            return numCount;
+        }
+        console.log('Client disconnected, total clients:', connections)
+        console.log(connectionTotal())
+        wss.broadcast(JSON.stringify(connectionTotal())) // sending connections totals to the app
     });
-
-        
 });

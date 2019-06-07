@@ -9,10 +9,11 @@ class App extends Component {
     super(props)
     this.state = {
       currentUser: {name: 'Bob'}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: []
+      messages: [],
+      counter: 0
     }
-    this.messageHandler = this. messageHandler.bind(this);
-    this.usernameHandler = this. usernameHandler.bind(this);
+    this.messageHandler = this.messageHandler.bind(this);
+    this.usernameHandler = this.usernameHandler.bind(this);
   }
 // handling the messages as inputted from the user
   messageHandler(event) {
@@ -51,7 +52,7 @@ class App extends Component {
 
       this.socket.onmessage = (event) => {
         const post = JSON.parse(event.data);
-        
+
         if(post.type === 'incomingMessage') {
           const newMsges = [...this.state.messages, post]
           this.setState( 
@@ -61,6 +62,12 @@ class App extends Component {
           const msgNotify = [... this.state.messages, post]
           this.setState(
             { messages: msgNotify }
+          )
+        } else if(post.type === 'counter') {
+          
+          console.log(post.count)
+          this.setState(
+            {counter: post.count}
           )
         }
       }
@@ -81,7 +88,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Nav/>
+        <Nav counter={this.state.counter}/>
         <MessageList messages={this.state.messages}/>
         <ChatBar currentUser={this.state.currentUser} 
                 usernameHandler={this.usernameHandler} 
