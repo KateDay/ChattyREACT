@@ -35,7 +35,6 @@ wss.on('connection', (ws) => {
         }
         return numCount;
     }   
-    console.log(connectionTotal())
     wss.broadcast(JSON.stringify(connectionTotal())) // sending the number of connections total to the app
 
     ws.on('message', function incoming(data) {
@@ -63,7 +62,6 @@ wss.on('connection', (ws) => {
             return numCount;
         }
         console.log('Client disconnected, total clients:', connections)
-        console.log(connectionTotal())
         wss.broadcast(JSON.stringify(connectionTotal())) // sending connections totals to the app
     });
 });
