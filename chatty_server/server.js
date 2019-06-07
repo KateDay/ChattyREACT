@@ -27,21 +27,23 @@ wss.broadcast = function broadcast(data) {
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
     console.log('Client connected');
+    let numCount = {
+        type: 'counter'
+    }
     connections++;
     console.log(connections);
-// let numCount = {
-//     type: 'counter'
-//     }
+    wss.broadcast(numCount) // sending the number of connections total to the app
+
     ws.on('message', function incoming(data) {
         const parsed = JSON.parse(data)
         parsed.id = uuidv1();
-        console.log(parsed)
+
         if(parsed.type == 'postMessage'){
             parsed.type = 'incomingMessage'
         } else if(parsed.type == 'postNotification'){
         parsed.type = 'incomingNotification'
         }
-
+        console.log(parsed)
         wss.broadcast(JSON.stringify(parsed))
         console.log(`${parsed.username} said ${parsed.content}`) 
 
@@ -52,7 +54,7 @@ wss.on('connection', (ws) => {
         connections--;
         console.log('Client disconnected')
         console.log(connections);
-        // wss.broadcast()
+        wss.broadcast(numCount) // sending connections totals
     });
 
         
