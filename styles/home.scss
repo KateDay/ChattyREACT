@@ -5,7 +5,7 @@ h1 {
 body {
   background: white;
   color: black;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   margin: 70px 0;
 }
@@ -42,11 +42,16 @@ body {
 .message {
   display: flex;
   padding: 5px;
+  border: 1px solid black;
+  border-radius: 8px;
+  background-color: tomato;
 }
 
 .message.system {
   font-style: italic;
   padding: 5px 20px;
+  background-color: inherit;
+  border: none;
 }
 
 .message-content,
@@ -67,6 +72,7 @@ body {
 
 .navbar {
   background: tomato;
+  font-family: "Hind Guntur", sans-serif;
   border-bottom: 1px solid black;
   height: 60px;
   left: 0;
@@ -81,9 +87,18 @@ body {
   display: block;
   float: left;
   font-weight: 700;
-  font-size: 28px;
+  font-size: 40px;
   height: 60px;
-  line-height: 60px;
+  line-height: 70px;
   padding: 0 10px;
   text-decoration: none;
+}
+
+.userCounter {
+  color: inherit;
+  display: block;
+  float: right;
+  line-height: 64px;
+  font-size: 20px;
+  padding: 0 25px;
 }
