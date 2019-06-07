@@ -6,13 +6,15 @@ class Nav extends Component {
         return (
             <nav className="navbar">
                 <a href="/" className="navbar-brand">Chatty</a>
-                <div className="userCounter">{this.props.counter}</div>
+                <div className="userCounter">How users are here: {this.props.counter}</div>
             </nav>
         );
     }
 }
 
+//Setting propTypes
 Nav.propTypes = {
-    counter: PropTypes.func
+    counter: PropTypes.number
 };
+
 export default Nav;
