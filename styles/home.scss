@@ -50,11 +50,12 @@ body {
   display: flex;
   padding: 5px;
   border: 1px solid black;
-  border-radius: 8px;
+  border-radius: 17px;
   background-color: tomato;
 }
 
 .message.system {
+  display: block;
   font-style: italic;
   padding: 5px 20px;
   background-color: inherit;
@@ -87,6 +88,8 @@ body {
   position: fixed;
   right: 0;
   top: 0;
+  z-index: 4;
+  box-shadow: 0px 2px 30px 0px rgba(0, 0, 0, 0.75);
 }
 
 .navbar-brand {
