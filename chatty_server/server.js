@@ -43,14 +43,15 @@ wss.on('connection', ws => {
     const parsed = JSON.parse(data);
     parsed.id = uuidv1();
 
-    if (parsed.type == 'postMessage') {
+    if (parsed.type === 'postMessage') {
       parsed.type = 'incomingMessage';
-    } else if (parsed.type == 'postNotification') {
+      console.log(`${parsed.username} said: ${parsed.content}`);
+    } else if (parsed.type === 'postNotification') {
       parsed.type = 'incomingNotification';
+      console.log(`${parsed.name} said: ${parsed.content}`);
     }
     console.log(parsed);
     wss.broadcast(JSON.stringify(parsed));
-    console.log(`${parsed.username} said ${parsed.content}`);
   });
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
