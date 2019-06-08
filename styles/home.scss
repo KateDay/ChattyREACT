@@ -20,6 +20,13 @@ body {
   position: fixed;
   right: 0;
 }
+.chatBox {
+  display: flex;
+  width: 100%;
+}
+.chat-text {
+  flex: 1;
+}
 
 .chatbar-message,
 .chatbar-username {
@@ -32,11 +39,11 @@ body {
 }
 
 .chatbar-message {
-  flex: 8;
+  width: 97%;
 }
 
 .chatbar-username {
-  flex: 2;
+  flex: 1;
 }
 
 .message {
