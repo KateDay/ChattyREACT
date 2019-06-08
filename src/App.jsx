@@ -30,7 +30,6 @@ class App extends Component {
   }
   // giving the ability to change the user's name
   usernameHandler(event) {
-    
     if (event.charCode == 13) {
       const notify = `${this.state.currentUser.name} 
         changed their name to ${event.target.value}!`;
@@ -39,7 +38,6 @@ class App extends Component {
         type: 'postNotification',
         content: notify
       };
-
       this.socket.send(JSON.stringify(userMsg));
       this.setState({ currentUser: userMsg });
     }
