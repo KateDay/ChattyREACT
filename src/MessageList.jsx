@@ -9,19 +9,18 @@ class MessageList extends Component {
       .map(msg => (
         <Message username={msg.username} content={msg.content} key={msg.id} />
       ));
+
     let notifications = this.props.messages
       .filter(message => {
         return message.type === 'incomingNotification';
       })
-      .map(message => message.content);
+      .map((message, index) => <li key={index}>{message.content}</li>);
 
     return (
       <main className="messages">
         {/* className="message"> */}
         {messagesList}
-        <div className="message system">
-          {notifications}
-        </div>
+        <ul className="message system">{notifications}</ul>
       </main>
     );
   }
