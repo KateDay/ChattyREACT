@@ -23,9 +23,9 @@ cd chatty_server
 node server.js
 ```
 
-### Dependencies
+### Dependencies include:
 
-- node
+- Node
 - React
 - Webpack
 - Sass
