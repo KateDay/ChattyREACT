@@ -24,8 +24,14 @@ class App extends Component {
 				username: this.state.currentUser.name,
 				content: event.target.value,
 			};
-			this.socket.send(JSON.stringify(newMsg));
-			event.target.value = null;
+			if (event.target.value === '') {
+				alert(
+					'You can not send an empty message. Tell us what is on your mind!',
+				);
+			} else {
+				this.socket.send(JSON.stringify(newMsg));
+				event.target.value = null;
+			}
 		}
 	}
 
@@ -38,8 +44,12 @@ class App extends Component {
 				type: 'postNotification',
 				content: notify,
 			};
-			this.socket.send(JSON.stringify(userMsg));
-			this.setState({ currentUser: userMsg });
+			if (event.target.value === '') {
+				alert('We want to know what to call you, This field can not be empty');
+			} else {
+				this.socket.send(JSON.stringify(userMsg));
+				this.setState({ currentUser: userMsg });
+			}
 		}
 	}
 
@@ -63,16 +73,6 @@ class App extends Component {
 				}
 			};
 		};
-
-		// setTimeout(() => {
-		//   console.log('Simulating incoming message');
-		//   // Add a new message to the list of messages in the data store
-		//   const newMessage = {id: 3, username: 'Michelle', content: 'Hello there!'};
-		//   const messages = this.state.messages.concat(newMessage)
-		//   // Update the state of the app component.
-		//   // Calling setState will trigger a call to render() in App and all child components.
-		//   this.setState({messages: messages})
-		// }, 3000);
 	}
 
 	render() {
