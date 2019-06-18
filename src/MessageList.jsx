@@ -14,11 +14,11 @@ class MessageList extends Component {
 
 		let notifications = this.props.messages
 			.filter(message => {
-				return message.type === 'incomingNotification';
+				message.type === 'incomingNotification';
 			})
-			.map((message, index) => (
-				<li className="message system" key={index}>
-					{message.content}
+			.map(msg => (
+				<li className="message system" key={msg.id}>
+					{msg.content}
 				</li>
 			));
 

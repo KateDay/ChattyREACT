@@ -26,7 +26,7 @@ class App extends Component {
 			};
 			if (event.target.value === '') {
 				alert(
-					'You can not send an empty message. Tell us what is on your mind!',
+					'You can not send an empty message. Tell us what is on your mind!'
 				);
 			} else {
 				this.socket.send(JSON.stringify(newMsg));
@@ -42,6 +42,7 @@ class App extends Component {
 			const userMsg = {
 				name: event.target.value,
 				type: 'postNotification',
+				id: this.state.messages.length + 1,
 				content: notify,
 			};
 			if (event.target.value === '') {
