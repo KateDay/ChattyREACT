@@ -5,31 +5,21 @@ import Message from './Message.jsx';
 class MessageList extends Component {
 	render() {
 		let messagesList = this.props.messages
-			.filter(message => message.type === 'incomingMessage')
-			.map(msg => (
-				<li key={msg.id}>
-					<Message username={msg.username} content={msg.content} />
-				</li>
-			));
+			.map(msg =>
+				msg.type === 'incomingMessage' ? (
+					<li key={msg.id}>
+						<Message username={msg.username} content={msg.content} />
+					</li>
+				) : (
+					<li className="message system" key={msg.id}>
+						{msg.content}
+					</li>
+				));
 
-		let notifications = this.props.messages
-			.filter(message => {
-				message.type === 'incomingNotification';
-			})
-			.map(msg => (
-				<li className="message system" key={msg.id}>
-					{msg.content}
-				</li>
-			));
-
+		
 		return (
 			<main className="messages">
-				{/* className="message"> */}
-
-				<ul className="messageList">
-					{notifications}
-					{messagesList}
-				</ul>
+				<ul className="messageList">{messagesList}</ul>
 			</main>
 		);
 	}
